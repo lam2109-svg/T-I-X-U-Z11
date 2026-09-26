@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Z11 Hacker Tool</title>
+<style>
+*{box-sizing:border-box}
+body{
+margin:0;
+min-height:100vh;
+font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display",sans-serif;
+color:white;
+background:
+radial-gradient(circle at 20% 10%,#173b35,transparent 35%),
+radial-gradient(circle at 80% 90%,#24103a,transparent 40%),
+#050607;
+}
+.header{
+position:sticky;
+top:12px;
+z-index:10;
+width:calc(100% - 24px);
+max-width:700px;
+margin:12px auto;
+padding:14px;
+border-radius:24px;
+background:rgba(18,18,20,.7);
+backdrop-filter:blur(25px);
+border:1px solid rgba(255,255,255,.12);
+}
+.logo{
+text-align:center;
+font-weight:900;
+font-size:20px;
+letter-spacing:3px;
+color:#00ffc3;
+margin-bottom:12px;
+}
+.nav{
+display:flex;
+gap:7px;
+overflow-x:auto;
+}
+.nav button{
+flex:1;
+min-width:105px;
+border:0;
+border-radius:17px;
+padding:12px;
+color:#aaa;
+background:transparent;
+font-weight:800;
+}
+.nav button.active{
+color:white;
+background:rgba(255,255,255,.12);
+}
+.container{
+width:calc(100% - 28px);
+max-width:620px;
+margin:35px auto;
+}
+.page{display:none}
+.page.active{display:block}
+.card{
+padding:28px 20px;
+border-radius:30px;
+background:rgba(15,16,18,.75);
+border:1px solid rgba(255,255,255,.1);
+backdrop-filter:blur(22px);
+text-align:center;
+}
+.badge{
+display:inline-block;
+padding:7px 13px;
+border-radius:100px;
+background:rgba(0,255,195,.1);
+color:#00ffc3;
+font-size:11px;
+font-weight:900;
+}
+h1{font-size:31px}
+.desc{
+color:#858585;
+font-size:14px;
+margin-bottom:25px;
+}
+.predict-btn{
+width:100%;
+border:0;
+border-radius:20px;
+padding:17px;
+color:#00130f;
+background:linear-gradient(135deg,#00ffc3,#00aaff);
+font-size:16px;
+font-weight:950;
+}
+.result{
+min-height:110px;
+margin-top:20px;
+padding:25px 10px;
+display:flex;
+justify-content:center;
+align-items:center;
+border-radius:22px;
+background:rgba(255,255,255,.045);
+}
+.result-text{
+font-size:43px;
+font-weight:950;
+color:#00ffc3;
+}
+.small{
+color:#666;
+font-size:11px;
+margin-top:18px;
+}
+#keyScreen{
+position:fixed;
+inset:0;
+z-index:100;
+display:flex;
+align-items:center;
+justify-content:center;
+padding:20px;
+background:#050607;
+}
+.key-box{
+width:100%;
+max-width:430px;
+padding:30px 22px;
+border-radius:30px;
+text-align:center;
+background:rgba(15,16,18,.9);
+border:1px solid rgba(0,255,195,.2);
+}
+.key-icon{
+font-size:45px;
+}
+.key-box p{
+color:#777;
+font-size:13px;
+}
+.key-input{
+width:100%;
+padding:16px;
+margin:18px 0 10px;
+border-radius:16px;
+border:1px solid rgba(255,255,255,.1);
+outline:none;
+color:white;
+background:rgba(255,255,255,.06);
+text-align:center;
+}
+.key-btn{
+width:100%;
+padding:15px;
+border:0;
+border-radius:16px;
+background:#00ffc3;
+color:#00130f;
+font-weight:900;
+}
+.error{
+min-height:20px;
+margin-top:10px;
+color:#ff4d6d;
+font-size:12px;
+}
+.key-info{
+margin-top:20px;
+padding:12px;
+border-radius:14px;
+background:rgba(255,255,255,.04);
+color:#777;
+font-size:11px;
+}
+</style>
+</head>
+<body>
+<div id="keyScreen">
+<div class="key-box">
+<div class="key-icon">⌬</div>
+<h2>Z11 ACCESS</h2>
+<p>Nhập key để mở công cụ</p>
+<input
+id="keyInput"
+class="key-input"
+type="text"
+placeholder="Nhập KEY..."
+autocomplete="off">
+<button class="key-btn" onclick="checkKey()">
+XÁC NHẬN KEY
+</button>
+<div id="keyError" class="error"></div>
+<div class="key-info">
+KEY 6 GIỜ: z11_taixiu<br>
+KEY VIP: 2 KEY còn lại
+</div>
+</div>
+</div>
+<header class="header">
+<div class="logo">
+Z11 • HACKER TOOL
+</div>
+<div class="nav">
+<button
+class="active"
+onclick="showPage('taixiu',this)">
+TÀI XỈU
+</button>
+<button
+onclick="showPage('aviator',this)">
+AVIATOR
+</button>
+<button
+onclick="showPage('sicbo',this)">
+SICBO
+</button>
+</div>
+</header>
+<main class="container">
+<section id="taixiu" class="page active">
+<div class="card">
+<span class="badge">TAI XIU • 50/50</span>
+<h1>ĐOÁN CẦU</h1>
+<div class="desc">
+Random mô phỏng tỷ lệ 50/50
+</div>
+<button
+class="predict-btn"
+onclick="predictTaiXiu()">
+ĐOÁN CẦU
+</button>
+<div class="result">
+<div id="taiResult" class="result-text">—</div>
+</div>
+<div class="small">
+Kết quả được tạo ngẫu nhiên.
+</div>
+</div>
+</section>
+<section id="aviator" class="page">
+<div class="card">
+<span class="badge">AVIATOR</span>
+<h1>DỰ ĐOÁN X</h1>
+<div class="desc">
+Sinh hệ số ngẫu nhiên dạng X.XX
+</div>
+<button
+class="predict-btn"
+onclick="predictAviator()">
+DỰ ĐOÁN X
+</button>
+<div class="result">
+<div id="aviatorResult" class="result-text">
+—.—
+</div>
+</div>
+<div class="small">
+Hệ số chỉ mang tính mô phỏng.
+</div>
+</div>
+</section>
+<section id="sicbo" class="page">
+<div class="card">
+<span class="badge">SICBO</span>
+<h1>ĐOÁN VỊ</h1>
+<div class="desc">
+Random 3 viên xúc xắc và tổng điểm
+</div>
+<button
+class="predict-btn"
+onclick="predictSicbo()">
+ĐOÁN VỊ
+</button>
+<div class="result">
+<div id="sicboResult" class="result-text">
+—
+</div>
+</div>
+<div class="small">
+Tài: 11–18 • Xỉu: 3–10
+</div>
+</div>
+</section>
+</main>
+<script>
+const KEY_6H="z11_taixiu";
+const PERMANENT_KEYS=[
+"z11_PUyqXzhf831",
+"z11_ZAkvPUvjUJfjH"
+];
+function checkSavedKey(){
+const key=localStorage.getItem("z11_key");
+const time=Number(
+localStorage.getItem("z11_activated")
+);
+if(!key)return false;
+if(PERMANENT_KEYS.includes(key)){
+return true;
+}
+if(key===KEY_6H){
+const sixHours=6*60*60*1000;
+if(Date.now()-time<sixHours){
+return true;
+}
+localStorage.removeItem("z11_key");
+localStorage.removeItem("z11_activated");
+}
+return false;
+}
+function checkKey(){
+const input=document
+.getElementById("keyInput")
+.value
+.trim();
+const error=document
+.getElementById("keyError");
+if(input===KEY_6H){
+localStorage.setItem(
+"z11_key",
+input
+);
+localStorage.setItem(
+"z11_activated",
+Date.now()
+);
+unlock();
+return;
+}
+if(PERMANENT_KEYS.includes(input)){
+localStorage.setItem(
+"z11_key",
+input
+);
+localStorage.removeItem(
+"z11_activated"
+);
+unlock();
+return;
+}
+error.textContent="KEY KHÔNG HỢP LỆ!";
+}
+function unlock(){
+document.getElementById(
+"keyScreen"
+).style.display="none";
+}
+function showPage(page,button){
+document
+.querySelectorAll(".page")
+.forEach(p=>{
+p.classList.remove("active");
+});
+document
+.getElementById(page)
+.classList.add("active");
+document
+.querySelectorAll(".nav button")
+.forEach(b=>{
+b.classList.remove("active");
+});
+button.classList.add("active");
+}
+function predictTaiXiu(){
+const result=
+Math.random()<0.5
+?"TÀI"
+:"XỈU";
+document.getElementById(
+"taiResult"
+).textContent=result;
+}
+function predictAviator(){
+const value=
+1.01+Math.random()*18.99;
+document.getElementById(
+"aviatorResult"
+).textContent=
+value.toFixed(2)+"X";
+}
+function randomDice(){
+return Math.floor(
+Math.random()*6
+)+1;
+}
+function predictSicbo(){
+const a=randomDice();
+const b=randomDice();
+const c=randomDice();
+const total=a+b+c;
+let result;
+if(total>=11){
+result=
+"VỊ TÀI<br>"+
+"<span style='font-size:25px'>"+
+a+" + "+b+" + "+c+
+" = "+total+
+"</span>";
+}else{
+result=
+"VỊ XỈU<br>"+
+"<span style='font-size:25px'>"+
+a+" + "+b+" + "+c+
+" = "+total+
+"</span>";
+}
+document.getElementById(
+"sicboResult"
+).innerHTML=result;
+}
+if(checkSavedKey()){
+unlock();
+}
+</script>
+</body>
+</html>
